@@ -42,7 +42,7 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity{
-    static String userid = "";
+    static String username = "";
 
     final String[] LOCATION_PERMS={
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -165,7 +165,7 @@ startActivity(intent);
                     String input = "Name/name";
                     input += Integer.toString(a);
                     myFirebaseRef.child(input).setValue(name);
-                    userid = name;
+                    username = name;
                     startActivity(intent);
 //                    ViewGroup parent = (ViewGroup) v.getParent();
 //                    parent.removeView(v);

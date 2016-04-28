@@ -33,9 +33,9 @@ public class Request {
     }
     public String toString() {
         if(this.driving == true){
-            return  "Driving from " + this.startLocation + " to " + this.endLocation + " with " +  this.riders  + this.time;
+            return  MainActivity.username + " is driving from " + this.startLocation + " to " + this.endLocation + " with " +  this.riders  + " people at " + this.time;
         } else {
-            return  "Requesting ride from " + this.startLocation + " to " + this.endLocation + " with " +  this.riders + " at " + this.time;
+            return  MainActivity.username + " is requesting a ride from " + this.startLocation + " to " + this.endLocation + " with " +  this.riders + " people at " + this.time;
         }
 
     }

@@ -58,6 +58,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:label="Request"></activity>
         <activity
+            android:name=".RequestsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="RequestList"></activity>
+        <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_main"

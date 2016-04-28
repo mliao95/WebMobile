@@ -38,7 +38,7 @@ public class CarpoolRequest extends AppCompatActivity {
     private Uri fileUri;
     private String LOCATION = "1337+3";
     private LocationManager mLocationManager;
-    private Location myLocation = getLastKnownLocation();
+    //private Location myLocation = getLastKnownLocation();
 
     private ArrayList<Request> requests;
     @Override
@@ -113,8 +113,8 @@ public class CarpoolRequest extends AppCompatActivity {
         }
         Request r = new Request(slocation, elocation, riders, drive, time);
 
-        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        Location location = myLocation;
+        //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Location location = null;
         requestPermissions(LOCATION_PERMS, 1337 + 3);
 
 
@@ -131,7 +131,6 @@ public class CarpoolRequest extends AppCompatActivity {
         else {
             longitude = 0.0;
             latitude = 0.0;
-
         }
         String input = r.toString()+"@"+longitude+","+latitude+"\n";
         System.out.println(input);
@@ -173,6 +172,7 @@ public class CarpoolRequest extends AppCompatActivity {
 
     private Location getLastKnownLocation() {
 
+
         Location bestLocation = null;
         if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
@@ -188,7 +188,9 @@ public class CarpoolRequest extends AppCompatActivity {
                 }
             }
         }
+
             return bestLocation;
+
 
     }
 

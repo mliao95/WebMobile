@@ -29,7 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 
 
 public class CarpoolActivity extends AppCompatActivity {
@@ -50,7 +50,7 @@ public class CarpoolActivity extends AppCompatActivity {
         setContentView(R.layout.carpool_main);
         ListView listView = (ListView) findViewById(R.id.list);
         TextView t1 = (TextView) findViewById(R.id.menutitle);
-        t1.setText("Hello, " + MainActivity.userid + "!");
+        t1.setText("Hello, " + MainActivity.username + "!");
         String[] values = new String[] { "",
                 "",
                 "",
@@ -118,9 +118,7 @@ public class CarpoolActivity extends AppCompatActivity {
 */
 
                     Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
-
-
-                    myFirebaseRef.child("request1").setValue(line);
+                    myFirebaseRef.child("Carpooling/"+MainActivity.username).setValue(line);
                     if (k < values.length)
                         values[k] = line;
 
@@ -159,6 +157,11 @@ public class CarpoolActivity extends AppCompatActivity {
        // intent.putExtra("position:", pos);
         startActivity(intent);
 
+    }
+
+    public void viewRequestClick(View v){
+        Intent intent = new Intent(this, RequestsActivity.class);
+        startActivity(intent);
     }
 
     public void readClick(View v){
