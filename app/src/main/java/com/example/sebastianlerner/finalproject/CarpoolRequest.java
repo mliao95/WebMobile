@@ -108,14 +108,14 @@ public class CarpoolRequest extends AppCompatActivity {
             drive = true;
         }
         Request r = new Request(slocation, elocation, riders, drive, time);
-
-        //LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location location = myLocation;
+        Location location = null;
         requestPermissions(LOCATION_PERMS, 1337 + 3);
 
 
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            //location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+            location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
         double longitude, latitude;
         if (location != null) {
