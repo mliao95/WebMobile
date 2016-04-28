@@ -47,15 +47,19 @@
 
         <activity
             android:name=".MapsActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_maps"></activity>
         <activity
             android:name=".CarpoolActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="Carpool"></activity>
         <activity
             android:name=".CarpoolRequest"
+            android:configChanges="orientation|keyboardHidden"
             android:label="Request"></activity>
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -75,6 +79,7 @@
         <activity
             android:name=".RequestDetail"
             android:label="@string/title_activity_request_detail"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

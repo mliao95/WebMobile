@@ -32,7 +32,6 @@ import java.util.ArrayList;
 
 public class CarpoolActivity extends AppCompatActivity {
     Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
-
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
