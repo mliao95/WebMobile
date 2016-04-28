@@ -10,8 +10,19 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/webmobile" />
           </set>
         </option>
+<<<<<<< HEAD
+=======
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/webmobile" />
+          </set>
+        </option>
+>>>>>>> 764552d7374aa44d32b00611cb7a49c49fea8ff8
       </GradleProjectSettings>
     </option>
   </component>
