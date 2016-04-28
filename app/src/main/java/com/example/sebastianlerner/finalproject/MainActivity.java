@@ -35,7 +35,7 @@ import static java.util.Collections.copy;
 
 
 public class MainActivity extends AppCompatActivity{
-    String userid = "";
+    static String userid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +94,7 @@ startActivity(intent);
         final EditText etname = (EditText)findViewById(R.id.userid);
         final TextView notify = (TextView)findViewById(R.id.notify);
         final String name = etname.getText().toString();
+        final Intent intent = new Intent(this, CarpoolActivity.class);
         myFirebaseRef.child("Name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -121,8 +122,12 @@ startActivity(intent);
                     input += Integer.toString(a);
                     myFirebaseRef.child(input).setValue(name);
                     userid = name;
-                    ViewGroup parent = (ViewGroup) v.getParent();
-                    parent.removeView(v);
+                    startActivity(intent);
+//                    ViewGroup parent = (ViewGroup) v.getParent();
+//                    parent.removeView(v);
+//                    parent = (ViewGroup) etname.getParent();
+//                    parent.removeView(etname);
+//                    notify.setText("Name has been recorded successfuly! Thank you, " + name + ".");
                 }
             }
 

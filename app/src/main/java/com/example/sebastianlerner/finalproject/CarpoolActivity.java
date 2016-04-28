@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -21,15 +22,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 
+
 public class CarpoolActivity extends AppCompatActivity {
     Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.carpool_main);
         ListView listView = (ListView) findViewById(R.id.list);
+        TextView t1 = (TextView) findViewById(R.id.menutitle);
+        t1.setText("Hello, " + MainActivity.userid + "!");
         String[] values = new String[] { "",
                 "",
                 "",
