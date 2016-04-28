@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -19,6 +22,7 @@ import java.io.InputStreamReader;
 
 
 public class CarpoolActivity extends AppCompatActivity {
+    Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,8 @@ public class CarpoolActivity extends AppCompatActivity {
             int k = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
-                Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
-                myFirebaseRef.child("request").setValue(line);
+
+                myFirebaseRef.child("request1").setValue(line);
                 if(k < values.length)
                     values[k] = line;
                 k++;
@@ -73,7 +77,24 @@ public class CarpoolActivity extends AppCompatActivity {
     public void requestClick(View v){
         Intent intent = new Intent(this, CarpoolRequest.class);
         startActivity(intent);
+
     }
+
+    public void readClick(View v){
+        myFirebaseRef.child("request1").addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println(snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
+            }
+
+            @Override public void onCancelled(FirebaseError error) { }
+
+        });
+    }
+
+
+
 
 
 }

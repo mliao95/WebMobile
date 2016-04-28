@@ -40,8 +40,39 @@
         android:layout_height="wrap_content"
         android:text="Find Carpool"
         android:id="@+id/carpool"
+        android:onClick="carpoolClick"
         android:layout_above="@+id/parking"
+        android:layout_alignEnd="@+id/parking" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/userid"
+        android:layout_below="@+id/TitleText"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="37dp"
-        android:onClick="carpoolClick" />
+        android:layout_marginTop="45dp"
+        android:singleLine="false"
+        android:hint="Input Name" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit Name"
+        android:id="@+id/idsubmit"
+        android:layout_below="@+id/userid"
+        android:layout_centerHorizontal="true"
+        android:nestedScrollingEnabled="false"
+        android:onClick="submitName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/notify"
+        android:layout_below="@+id/TitleText"
+        android:layout_alignStart="@+id/userid" />
+
 </RelativeLayout>

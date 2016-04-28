@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
 
     <TextView
@@ -18,13 +19,23 @@
         android:layout_height="wrap_content"
         android:text="Request"
         android:id="@+id/requestbutton"
+        android:onClick="requestClick"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Read"
+        android:id="@+id/readdb"
         android:layout_gravity="center_horizontal"
-        android:onClick="requestClick" />
+        android:onClick="readClick" />
 
     <ListView
         android:id="@+id/list"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_height="306dp"
+        android:layout_width="match_parent"
+        android:layout_weight="0.79">
     </ListView>
 
 
