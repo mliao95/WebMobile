@@ -17,9 +17,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+<<<<<<< HEAD
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+=======
+import com.firebase.client.Firebase;
+>>>>>>> 165f0e62fd04faf075586e9cd6848b9bb99e7c9a
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -82,6 +86,7 @@ public class CarpoolActivity extends AppCompatActivity {
             int k = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
+
                 if (k < values.length) {
                     int atLocation = line.indexOf("@");
                     String tempSub = line.substring(atLocation);
@@ -110,6 +115,11 @@ public class CarpoolActivity extends AppCompatActivity {
 
                     double distance = Math.sqrt(Math.pow((longit-Double.parseDouble(longitude)), 2) - Math.pow((latit-Double.parseDouble(latitude)), 2));
                     distances.add(distance);
+
+
+                Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
+                myFirebaseRef.child("request").setValue(line);
+                if(k < values.length)
 
                     values[k] = line;
                 }

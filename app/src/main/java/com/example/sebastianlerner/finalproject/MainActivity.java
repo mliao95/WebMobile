@@ -11,6 +11,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
 import android.view.View;
+<<<<<<< HEAD
+=======
+import android.widget.Button;
+import android.view.View.OnClickListener;
+import com.firebase.client.Firebase;
+
+import java.io.IOException;
+import java.nio.channels.Channels;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static java.util.Collections.copy;
+>>>>>>> 165f0e62fd04faf075586e9cd6848b9bb99e7c9a
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -32,7 +46,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-         new ServletPostAsyncTask().execute(new Pair<Context, String>(this, "seb"));
+
+
+
+        Firebase.setAndroidContext(this);
+        new ServletPostAsyncTask().execute(new Pair<Context, String>(this, "Michael"));
 
 
 /**
@@ -63,6 +81,8 @@ startActivity(intent);
 
     public void carpoolClick(View v) {
         System.out.println("HELLO!!!");
+        Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
+        myFirebaseRef.child("message").setValue("Do you have data? You'll love Firebase.");
         Intent intent = new Intent(this, CarpoolActivity.class);
         startActivity(intent);
     }
@@ -82,6 +102,7 @@ startActivity(intent);
     }
 
 
+<<<<<<< HEAD
     @Override
     public void onStart() {
         super.onStart();
@@ -121,4 +142,5 @@ startActivity(intent);
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+
 }
