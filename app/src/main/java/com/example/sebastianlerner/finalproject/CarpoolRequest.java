@@ -172,10 +172,11 @@ public class CarpoolRequest extends AppCompatActivity {
     }
 
     private Location getLastKnownLocation() {
-        mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
-        List<String> providers = mLocationManager.getProviders(true);
+
         Location bestLocation = null;
         if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+            List<String> providers = mLocationManager.getProviders(true);
             for (String provider : providers) {
                 Location l = mLocationManager.getLastKnownLocation(provider);
                 if (l == null) {
