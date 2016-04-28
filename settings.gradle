@@ -1,1 +1,1 @@
-include ':app', ':webmobile'
+include ':app', ':webmobile', ':backend', ':firebase-client-android-2.5.2'
