@@ -2,7 +2,7 @@ package com.example.sebastianlerner.finalproject;
 
 /**
  * Created by Michael on 4/13/2016.
- */
+ */ 
 public class Request {
     private String name;
     private String startLocation;

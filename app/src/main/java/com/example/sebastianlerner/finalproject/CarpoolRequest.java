@@ -62,6 +62,7 @@ public class CarpoolRequest extends AppCompatActivity {
     public void submission(View v){
 
 
+
         EditText slocationE = (EditText) findViewById(R.id.slocation);
         EditText elocationE = (EditText) findViewById(R.id.elocation);
        // EditText dateE = (EditText) findViewById(R.id.date);
@@ -99,7 +100,7 @@ public class CarpoolRequest extends AppCompatActivity {
             latitude = 0.0;
 
         }
-        String input = r.toString()+longitude+","+latitude+"\n";
+        String input = r.toString()+"@"+longitude+","+latitude+"\n";
         System.out.println(input);
         BufferedWriter bw = null;
         Log.i("ffff", "test");

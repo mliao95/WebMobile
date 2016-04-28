@@ -1,7 +1,12 @@
 package com.example.sebastianlerner.finalproject;
 
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 
 public class CarpoolActivity extends AppCompatActivity {
@@ -31,6 +37,10 @@ public class CarpoolActivity extends AppCompatActivity {
      */
     private GoogleApiClient client;
     public String values[];
+    ArrayList<Double> distances = new ArrayList<Double>();
+    final String[] LOCATION_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +82,38 @@ public class CarpoolActivity extends AppCompatActivity {
             int k = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
-                if (k < values.length)
+                if (k < values.length) {
+                    int atLocation = line.indexOf("@");
+                    String tempSub = line.substring(atLocation);
+                    int commaLocation = tempSub.indexOf(",");
+                    String longitude = tempSub.substring(0, commaLocation);
+                    String latitude = tempSub.substring(commaLocation);
+
+                    LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+                    Location location = null;
+                    requestPermissions(LOCATION_PERMS, 1337+3);
+                    if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    {
+                        location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+                    double longit, latit;
+                    if(location != null) {
+                        longit = location.getLongitude();
+                        latit = location.getLatitude();
+
+                    }
+                    else {
+                        longit = 0.0;
+                        latit = 0.0;
+
+                    }
+
+                    double distance = Math.sqrt(Math.pow((longit-Double.parseDouble(longitude)), 2) - Math.pow((latit-Double.parseDouble(latitude)), 2));
+                    distances.add(distance);
+
                     values[k] = line;
+                }
+
                 k++;
             }
             Log.d("line", sb.toString());
@@ -82,6 +122,8 @@ public class CarpoolActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.d("io", "exception");
         }
+
+        int[] tempArray = new int[distances.size()];
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
