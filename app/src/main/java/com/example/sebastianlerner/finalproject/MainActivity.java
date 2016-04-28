@@ -12,6 +12,15 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
+import com.firebase.client.Firebase;
+
+import java.io.IOException;
+import java.nio.channels.Channels;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static java.util.Collections.copy;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -22,6 +31,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Firebase.setAndroidContext(this);
         new ServletPostAsyncTask().execute(new Pair<Context, String>(this, "Michael"));
 
 /**
@@ -50,6 +60,8 @@ startActivity(intent);
 
     public void carpoolClick(View v){
         System.out.println("HELLO!!!");
+        Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
+        myFirebaseRef.child("message").setValue("Do you have data? You'll love Firebase.");
         Intent intent = new Intent(this, CarpoolActivity.class);
         startActivity(intent);
     }
@@ -65,5 +77,6 @@ startActivity(intent);
 
         startActivity(intent);
     }
+
 
 }

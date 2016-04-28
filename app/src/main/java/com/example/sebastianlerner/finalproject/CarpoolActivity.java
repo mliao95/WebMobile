@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.firebase.client.Firebase;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,6 +47,8 @@ public class CarpoolActivity extends AppCompatActivity {
             int k = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
+                Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
+                myFirebaseRef.child("request").setValue(line);
                 if(k < values.length)
                     values[k] = line;
                 k++;
