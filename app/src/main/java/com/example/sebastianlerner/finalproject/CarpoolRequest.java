@@ -3,11 +3,13 @@ package com.example.sebastianlerner.finalproject;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -16,10 +18,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
+
 /**
  * Created by Michael on 4/4/2016.
  */
 public class CarpoolRequest extends AppCompatActivity {
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+
     private ArrayList<Request> requests;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +33,34 @@ public class CarpoolRequest extends AppCompatActivity {
         EditText slocation = (EditText) findViewById(R.id.slocation);
     }
 
+    public void photo(View v)
+    {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Image captured and saved to fileUri specified in the Intent
+                Toast.makeText(this, "Image saved to:\n" +
+                        data.getData(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // User cancelled the image capture
+            } else {
+                // Image capture failed, advise user
+            }
+        }
+    }
     public void submission(View v){
+
+
         EditText slocationE = (EditText) findViewById(R.id.slocation);
         EditText elocationE = (EditText) findViewById(R.id.elocation);
         EditText dateE = (EditText) findViewById(R.id.date);
         EditText ridersE = (EditText) findViewById(R.id.riders);
         EditText timeE = (EditText) findViewById(R.id.time);
+
         String slocation = slocationE.getText().toString();
         String elocation = elocationE.getText().toString();
         String date = dateE.getText().toString().replace("/", "");

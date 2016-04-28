@@ -105,6 +105,16 @@
         android:layout_below="@+id/completed"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take Photo of Car"
+        android:id="@+id/button2"
+        android:layout_below="@+id/driving"
+        android:layout_alignParentStart="true"
+        android:onClick="photo"/>
+
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
