@@ -33,7 +33,7 @@ public class Request {
     }
     public String toString() {
         if(this.driving == true){
-            return  "Driving from " + this.startLocation + " to " + this.endLocation + " with " +  this.riders + " riders on " + this.month + "/" + this.day + "/" + this.year + " at " + this.time;
+            return  "Driving from " + this.startLocation + " to " + this.endLocation + " with " +  this.riders  + this.time;
         } else {
             return  "Requesting ride from " + this.startLocation + " to " + this.endLocation + " with " +  this.riders + " at " + this.time;
         }
