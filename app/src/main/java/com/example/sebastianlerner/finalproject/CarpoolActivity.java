@@ -13,10 +13,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -27,6 +31,7 @@ import java.util.ArrayList;
 
 
 public class CarpoolActivity extends AppCompatActivity {
+    Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -111,20 +116,19 @@ public class CarpoolActivity extends AppCompatActivity {
                     distances.add(distance);
 */
 
-                Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
-                myFirebaseRef.child("request").setValue(line);
-                if(k < values.length) {
-                    if(line.indexOf("%") != -1)
-                    values[k] = line.substring(line.indexOf("%"));
-                    else
-                        values[k] = line;
-                }
-                }
+                    Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
 
-                k++;
+
+                    myFirebaseRef.child("request1").setValue(line);
+                    if (k < values.length)
+                        values[k] = line;
+
+                    k++;
+                }
+                Log.d("line", sb.toString());
+
             }
-            Log.d("line", sb.toString());
-        } catch (FileNotFoundException e) {
+        }catch (FileNotFoundException e) {
             Log.d("not found", "not found");
         } catch (IOException e) {
             Log.d("io", "exception");
@@ -153,7 +157,26 @@ public class CarpoolActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CarpoolRequest.class);
        // intent.putExtra("position:", pos);
         startActivity(intent);
+
     }
+
+    public void readClick(View v){
+        myFirebaseRef.child("request1").addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println(snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
+
+        });
+    }
+
+
+
 
 
     @Override
