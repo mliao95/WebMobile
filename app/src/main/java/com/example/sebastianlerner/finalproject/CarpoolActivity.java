@@ -122,7 +122,7 @@ public class CarpoolActivity extends AppCompatActivity {
 
                     myFirebaseRef.child("request1").setValue(line);
                     if (k < values.length)
-                        values[k] = line;
+                        values[k] = line.substring(0, line.indexOf("@"));
 
                     k++;
                 }
