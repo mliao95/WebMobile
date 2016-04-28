@@ -1,7 +1,11 @@
 package com.example.sebastianlerner.finalproject;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +28,9 @@ import java.util.ArrayList;
  */
 public class CarpoolRequest extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    final String[] LOCATION_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
 
     private ArrayList<Request> requests;
     @Override
@@ -57,13 +64,13 @@ public class CarpoolRequest extends AppCompatActivity {
 
         EditText slocationE = (EditText) findViewById(R.id.slocation);
         EditText elocationE = (EditText) findViewById(R.id.elocation);
-        EditText dateE = (EditText) findViewById(R.id.date);
+       // EditText dateE = (EditText) findViewById(R.id.date);
         EditText ridersE = (EditText) findViewById(R.id.riders);
         EditText timeE = (EditText) findViewById(R.id.time);
 
         String slocation = slocationE.getText().toString();
         String elocation = elocationE.getText().toString();
-        String date = dateE.getText().toString().replace("/", "");
+       // String date = dateE.getText().toString().replace("/", "");
         int riders = Integer.parseInt(ridersE.getText().toString());
         String timeS = timeE.getText().toString().replace(":", "");
         int time = Integer.parseInt(timeS);
@@ -72,9 +79,27 @@ public class CarpoolRequest extends AppCompatActivity {
         if (checked.isChecked()) {
             drive = true;
         }
-        Request r = new Request(slocation, elocation, date, riders, drive, time);
+        Request r = new Request(slocation, elocation, riders, drive, time);
 
-        String input = r.toString()+"\n";
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Location location = null;
+        requestPermissions(LOCATION_PERMS, 1337+3);
+        if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {
+         location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+        double longitude, latitude;
+        if(location != null) {
+             longitude = location.getLongitude();
+            latitude = location.getLatitude();
+
+        }
+        else {
+            longitude = 0.0;
+            latitude = 0.0;
+
+        }
+        String input = r.toString()+longitude+","+latitude+"\n";
         System.out.println(input);
         BufferedWriter bw = null;
         Log.i("ffff", "test");
