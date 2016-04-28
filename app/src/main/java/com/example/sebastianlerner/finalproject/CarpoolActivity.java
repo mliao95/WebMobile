@@ -2,11 +2,7 @@ package com.example.sebastianlerner.finalproject;
 
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,13 +13,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-<<<<<<< HEAD
+import com.firebase.client.Firebase;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-=======
-import com.firebase.client.Firebase;
->>>>>>> 165f0e62fd04faf075586e9cd6848b9bb99e7c9a
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -88,6 +81,7 @@ public class CarpoolActivity extends AppCompatActivity {
                 sb.append(line);
 
                 if (k < values.length) {
+                   /*
                     int atLocation = line.indexOf("@");
                     String tempSub = line.substring(atLocation);
                     int commaLocation = tempSub.indexOf(",");
@@ -115,13 +109,16 @@ public class CarpoolActivity extends AppCompatActivity {
 
                     double distance = Math.sqrt(Math.pow((longit-Double.parseDouble(longitude)), 2) - Math.pow((latit-Double.parseDouble(latitude)), 2));
                     distances.add(distance);
-
+*/
 
                 Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
                 myFirebaseRef.child("request").setValue(line);
-                if(k < values.length)
-
-                    values[k] = line;
+                if(k < values.length) {
+                    if(line.indexOf("%") != -1)
+                    values[k] = line.substring(line.indexOf("%"));
+                    else
+                        values[k] = line;
+                }
                 }
 
                 k++;

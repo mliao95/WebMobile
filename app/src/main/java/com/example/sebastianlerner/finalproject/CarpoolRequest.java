@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,11 +18,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 /**
@@ -31,6 +35,11 @@ public class CarpoolRequest extends AppCompatActivity {
     final String[] LOCATION_PERMS={
             Manifest.permission.ACCESS_FINE_LOCATION
     };
+    private String imageFile;
+    private Uri fileUri;
+    private String LOCATION = "1337+3";
+    private LocationManager mLocationManager;
+    private Location myLocation = getLastKnownLocation();
 
     private ArrayList<Request> requests;
     @Override
@@ -40,11 +49,27 @@ public class CarpoolRequest extends AppCompatActivity {
         EditText slocation = (EditText) findViewById(R.id.slocation);
     }
 
-    public void photo(View v)
+    public void photo(View v) throws IOException
     {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+
+        // Save a file: path for use with ACTION_VIEW intents
+
+        Intent imageIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+//folder stuff
+        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "MyImages");
+        imagesFolder.mkdirs();
+
+        File image = new File(imagesFolder, "QR_" + "photo" + ".png");
+        Uri uriSavedImage = Uri.fromFile(image);
+
+        imageIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+        startActivityForResult(imageIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+
+
     }
+
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -52,6 +77,12 @@ public class CarpoolRequest extends AppCompatActivity {
                 // Image captured and saved to fileUri specified in the Intent
                 Toast.makeText(this, "Image saved to:\n" +
                         data.getData(), Toast.LENGTH_LONG).show();
+
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
+
+
+
+
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
             } else {
@@ -69,6 +100,7 @@ public class CarpoolRequest extends AppCompatActivity {
         EditText ridersE = (EditText) findViewById(R.id.riders);
         EditText timeE = (EditText) findViewById(R.id.time);
 
+
         String slocation = slocationE.getText().toString();
         String elocation = elocationE.getText().toString();
        // String date = dateE.getText().toString().replace("/", "");
@@ -83,11 +115,13 @@ public class CarpoolRequest extends AppCompatActivity {
         Request r = new Request(slocation, elocation, riders, drive, time);
 
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        Location location = null;
-        requestPermissions(LOCATION_PERMS, 1337+3);
+        Location location = myLocation;
+        requestPermissions(LOCATION_PERMS, 1337 + 3);
+
+
         if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
         {
-         location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+         //location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
         double longitude, latitude;
         if(location != null) {
@@ -137,6 +171,31 @@ public class CarpoolRequest extends AppCompatActivity {
         Intent intent = new Intent(this, CarpoolActivity.class);
         startActivity(intent);
     }
+
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
+
+//    private void galleryAddPic() {
+//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        File f = new File(mCurrentPhotoPath);
+//        Uri contentUri = Uri.fromFile(f);
+//        mediaScanIntent.setData(contentUri);
+//        this.sendBroadcast(mediaScanIntent);
+//    }
 
 
 

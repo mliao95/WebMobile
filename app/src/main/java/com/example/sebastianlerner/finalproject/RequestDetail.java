@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 public class RequestDetail extends AppCompatActivity {
@@ -24,6 +25,16 @@ public class RequestDetail extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Bundle extras = getIntent().getExtras();
+        String values = extras.getString("values");
+        Log.d("values", values);
+
+       // byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+        //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+      //  String imageDataBytes = completeImageData.substring(completeImageData.indexOf(",")+1);
+
+      //  InputStream stream = new ByteArrayInputStream(Base64.decode(imageDataBytes.getBytes(), Base64.DEFAULT));
     }
 
 }

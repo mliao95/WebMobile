@@ -1,7 +1,7 @@
 package com.example.sebastianlerner.finalproject;
 
 
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,23 +9,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Pair;
+import android.util.Log;
 import android.view.View;
-<<<<<<< HEAD
-=======
-import android.widget.Button;
-import android.view.View.OnClickListener;
+
 import com.firebase.client.Firebase;
-
-import java.io.IOException;
-import java.nio.channels.Channels;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import static java.util.Collections.copy;
->>>>>>> 165f0e62fd04faf075586e9cd6848b9bb99e7c9a
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -37,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
+    final String[] LOCATION_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION
+
+    };
     private GoogleApiClient client;
 
     @Override
@@ -46,11 +37,28 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-
+        requestPermissions(LOCATION_PERMS, 1337 + 3);
+        Log.d("request my permission", "request it");
         Firebase.setAndroidContext(this);
-        new ServletPostAsyncTask().execute(new Pair<Context, String>(this, "Michael"));
+
+/*
+        Bitmap bmp =  BitmapFactory.decodeResource(getResources(), R.mipmap.test_pic);//your image
+        ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
+        bmp.recycle();
+        byte[] byteArray = bYtE.toByteArray();
+        String imageFile = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+
+
+
+       Firebase.setAndroidContext(this);
+        Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
+        myFirebaseRef.child("message").setValue(imageFile);
+
+*/
+        //
+        // new ServletPostAsyncTask().execute(new Pair<Context, String>(this, "Michael"));
 
 
 /**
@@ -83,6 +91,8 @@ startActivity(intent);
         System.out.println("HELLO!!!");
         Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
         myFirebaseRef.child("message").setValue("Do you have data? You'll love Firebase.");
+        requestPermissions(LOCATION_PERMS, 1337 + 3);
+
         Intent intent = new Intent(this, CarpoolActivity.class);
         startActivity(intent);
     }
@@ -102,7 +112,7 @@ startActivity(intent);
     }
 
 
-<<<<<<< HEAD
+
     @Override
     public void onStart() {
         super.onStart();
