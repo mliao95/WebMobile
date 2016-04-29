@@ -36,6 +36,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Favorites"
+        android:id="@+id/favorites"
+        android:onClick="favorites" />
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="View Driving Plans"
         android:id="@+id/drivinglist"
         android:onClick="drivingClick" />

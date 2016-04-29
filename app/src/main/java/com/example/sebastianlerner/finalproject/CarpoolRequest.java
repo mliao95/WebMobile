@@ -142,22 +142,22 @@ public class CarpoolRequest extends AppCompatActivity {
             longitude = location.getLongitude();
             latitude = location.getLatitude();
         } else {
-            longitude = 38.031674+(Math.random()*000001);
-            latitude = -78.510939+(Math.random()*.000001);
+            longitude = 38.031674 + (Math.random() * 000001);
+            latitude = -78.510939 + (Math.random() * .000001);
         }
         String input = r.toString() + "@" + longitude + "," + latitude + "\n";
         String line = r.toString() + "@" + longitude + "," + latitude;
         Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
         String mod = "";
         String[] split = line.split(" ");
-        if(split[0].charAt(0)== '-'){
+        if (split[0].charAt(0) == '-') {
             mod = "Driving/";
-            line = line.substring(1, line.length()-1);
+            line = line.substring(1, line.length() - 1);
             line = line.trim();
         }
-        if(split[0].charAt(0) == '+'){
+        if (split[0].charAt(0) == '+') {
             mod = "Carpooling/";
-            line = line.substring(1, line.length()-1);
+            line = line.substring(1, line.length() - 1);
             line = line.trim();
         }
         myFirebaseRef.child(mod + MainActivity.username).setValue(line);
@@ -196,9 +196,12 @@ public class CarpoolRequest extends AppCompatActivity {
         //   e.printStackTrace();
         //}
         //}
-        Intent intent = new Intent(this, CarpoolActivity.class);
-        startActivity(intent);
-    }
+        if (timeS != null || riders != 0 || !slocation.equals("") || !elocation.equals("")) {
+            Intent intent = new Intent(this, CarpoolActivity.class);
+
+            startActivity(intent);
+        }
+    }   
 
     private Location getLastKnownLocation() {
 

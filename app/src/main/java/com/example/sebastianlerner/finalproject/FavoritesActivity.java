@@ -50,6 +50,7 @@ public class FavoritesActivity extends AppCompatActivity {
             int k = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
+                Log.d("line", line);
 
                 if (k < values.length) {
                    /*

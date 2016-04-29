@@ -16,12 +16,11 @@ import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -29,7 +28,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class CarpoolActivity extends AppCompatActivity {
@@ -181,6 +179,14 @@ public class CarpoolActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    public void favorites(View v)
+    {
+
+        Intent intent = new Intent(this, FavoritesActivity.class);
+        // intent.putExtra("position:", pos);
+        startActivity(intent);
     }
 
 
