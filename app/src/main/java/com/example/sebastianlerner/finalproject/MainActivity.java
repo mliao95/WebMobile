@@ -134,6 +134,7 @@ startActivity(intent);
 
     public void submitName(final View v){
         Firebase.setAndroidContext(this);
+        System.out.println("Hello!");
         final Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
         final EditText etname = (EditText)findViewById(R.id.userid);
         final TextView notify = (TextView)findViewById(R.id.notify);

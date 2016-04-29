@@ -68,7 +68,7 @@ public class CarpoolActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-           test(view, position);
+                test(view, position);
             }
 
 
@@ -118,7 +118,18 @@ public class CarpoolActivity extends AppCompatActivity {
 */
 
                     Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
-                    myFirebaseRef.child("Carpooling/"+MainActivity.username).setValue(line);
+                    String mod = "";
+                    String[] split = line.split(" ");
+                    if(split[0].charAt(0)== '-'){
+                        mod = "Driving/";
+                        line = line.substring(1, line.length()-1);
+                    }
+                    if(split[0].charAt(0) == '+'){
+                        mod = "Carpooling/";
+                        line = line.substring(1, line.length()-1);
+                    }
+                    System.out.println("LINE IS HERE:    " + line);
+                    myFirebaseRef.child(mod + MainActivity.username).setValue(line);
                     if (k < values.length)
                         values[k] = line;
 
@@ -157,6 +168,11 @@ public class CarpoolActivity extends AppCompatActivity {
        // intent.putExtra("position:", pos);
         startActivity(intent);
 
+    }
+
+    public void drivingClick(View v){
+        Intent intent = new Intent(this, DrivingActivity.class );
+        startActivity(intent);
     }
 
     public void viewRequestClick(View v){

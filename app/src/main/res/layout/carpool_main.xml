@@ -24,20 +24,21 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Read"
-        android:id="@+id/readdb"
-        android:onClick="readClick"
-        android:layout_gravity="center_horizontal" />
-    <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View Requests"
         android:id="@+id/requestlist"
         android:onClick="viewRequestClick" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Driving Plans"
+        android:id="@+id/drivinglist"
+        android:onClick="drivingClick" />
 
     <ListView
         android:id="@+id/list"

@@ -2,6 +2,8 @@ package com.example.sebastianlerner.finalproject;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -22,12 +24,12 @@ import java.util.Iterator;
 public class RequestsActivity extends AppCompatActivity {
     public final ArrayList<String> requests = new ArrayList<String>();
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.request_listview);
-        ListView listView = (ListView) findViewById(R.id.requestlist);
+        final ListView listView = (ListView) findViewById(R.id.requestlist);
         Firebase.setAndroidContext(this);
-        requests.add("test");
         final Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
         myFirebaseRef.child("Carpooling").addValueEventListener(new ValueEventListener() {
             @Override
@@ -42,7 +44,10 @@ public class RequestsActivity extends AppCompatActivity {
                     String s = (String) itr.next();
                     s = s.substring(0, s.indexOf('@'));
                     System.out.println("s: " + s);
-                    updateRequests(s);
+                    String[] check = s.split(" ");
+                    if (!(check[0].equals(MainActivity.username))) {
+                        updateRequests(s);
+                    }
                     System.out.println("requests: " + requests);
                 }
                 updateListView();
@@ -55,7 +60,48 @@ public class RequestsActivity extends AppCompatActivity {
         });
         String[] values = requests.toArray(new String[requests.size()]);
         System.out.println("Values: " + requests);
+        ArrayAdapter<String> requestadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, requests);
+        listView.setAdapter(requestadapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                int iposition = position;
+                final String value = (String) listView.getItemAtPosition(iposition);
+                myFirebaseRef.child("Carpooling").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        HashMap h = new HashMap<String, String>();
+                        if (snapshot.getValue() instanceof HashMap) {
+                            h = (HashMap) snapshot.getValue();
+                        }
+                        Collection c = h.keySet();
+                        Iterator itr = c.iterator();
+                        while (itr.hasNext()) {
+                            String s = (String) itr.next();
+                            String[] check = value.split(" ");
 
+                            if (s.equals(check[0])) {
+                                System.out.println("HERE!!!!!");
+                                String val = (String) h.get(s);
+                                String hold = "!" + (String) h.get(s);
+                                if(val.charAt(1) != '!') {
+                                    hold = hold.substring(1, hold.length()-1);
+                                }
+                                myFirebaseRef.child("Carpooling/"+(String) s).setValue(hold);
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError error) {
+                    }
+
+                });
+
+
+            }
+        });
     }
 
     public void updateListView()
