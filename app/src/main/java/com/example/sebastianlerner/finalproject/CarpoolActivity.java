@@ -131,7 +131,7 @@ public class CarpoolActivity extends AppCompatActivity {
                     System.out.println("LINE IS HERE:    " + line);
                     myFirebaseRef.child(mod + MainActivity.username).setValue(line);
                     if (k < values.length)
-                        values[k] = line;
+                        values[k] = line.substring(0, line.indexOf("@"));
 
                     k++;
                 }

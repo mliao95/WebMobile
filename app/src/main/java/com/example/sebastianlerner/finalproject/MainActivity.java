@@ -11,15 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-
-
-import com.firebase.client.Firebase;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,13 +18,18 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.channels.Channels;
+import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 
 
@@ -63,6 +59,36 @@ public class MainActivity extends AppCompatActivity{
         Log.d("request my permission", "request it");
         Firebase.setAndroidContext(this);
 
+
+        try {
+            FileInputStream fis = getApplicationContext().openFileInput("myfile");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line = "l";
+            int k = 0;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            if(sb.length() > 0)
+            {
+                Intent intent = new Intent(this, CarpoolActivity.class);
+              //  intent.putExtra("pos", pos);
+              //  intent.putExtra("values", values[pos]);
+                startActivity(intent);
+            }
+
+        }
+        catch (FileNotFoundException e)
+        {
+
+        }
+        catch (IOException e)
+        {
+
+        }
 /*
         Bitmap bmp =  BitmapFactory.decodeResource(getResources(), R.mipmap.test_pic);//your image
         ByteArrayOutputStream bYtE = new ByteArrayOutputStream();

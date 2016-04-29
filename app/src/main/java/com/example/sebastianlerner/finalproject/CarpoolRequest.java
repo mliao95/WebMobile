@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class CarpoolRequest extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    final String[] LOCATION_PERMS={
+    final String[] LOCATION_PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION
     };
     private String imageFile;
@@ -41,6 +41,7 @@ public class CarpoolRequest extends AppCompatActivity {
     //private Location myLocation = getLastKnownLocation();
 
     private ArrayList<Request> requests;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +49,7 @@ public class CarpoolRequest extends AppCompatActivity {
         EditText slocation = (EditText) findViewById(R.id.slocation);
     }
 
-    public void photo(View v) throws IOException
-    {
+    public void photo(View v) throws IOException {
 
         // Save a file: path for use with ACTION_VIEW intents
 
@@ -69,7 +69,6 @@ public class CarpoolRequest extends AppCompatActivity {
     }
 
 
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
@@ -77,9 +76,7 @@ public class CarpoolRequest extends AppCompatActivity {
                 Toast.makeText(this, "Image saved to:\n" +
                         data.getData(), Toast.LENGTH_LONG).show();
 
-                sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
-
-
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
 
 
             } else if (resultCode == RESULT_CANCELED) {
@@ -89,20 +86,20 @@ public class CarpoolRequest extends AppCompatActivity {
             }
         }
     }
-    public void submission(View v){
 
+    public void submission(View v) {
 
 
         EditText slocationE = (EditText) findViewById(R.id.slocation);
         EditText elocationE = (EditText) findViewById(R.id.elocation);
-       // EditText dateE = (EditText) findViewById(R.id.date);
+        // EditText dateE = (EditText) findViewById(R.id.date);
         EditText ridersE = (EditText) findViewById(R.id.riders);
         EditText timeE = (EditText) findViewById(R.id.time);
 
 
         String slocation = slocationE.getText().toString();
         String elocation = elocationE.getText().toString();
-       // String date = dateE.getText().toString().replace("/", "");
+        // String date = dateE.getText().toString().replace("/", "");
         int riders = Integer.parseInt(ridersE.getText().toString());
         String timeS = timeE.getText().toString().replace(":", "");
         int time = Integer.parseInt(timeS);
@@ -114,50 +111,52 @@ public class CarpoolRequest extends AppCompatActivity {
         Request r = new Request(slocation, elocation, riders, drive, time);
 
         //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
         Location location = null;
         requestPermissions(LOCATION_PERMS, 1337 + 3);
 
 
-        if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        {
-         //location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+            location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
         double longitude, latitude;
-        if(location != null) {
-             longitude = location.getLongitude();
+        if (location != null) {
+            longitude = location.getLongitude();
             latitude = location.getLatitude();
-
+        } else {
+            longitude = 38.031674+(Math.random()*000001);
+            latitude = -78.510939+(Math.random()*.000001);
         }
-        else {
-            longitude = 0.0;
-            latitude = 0.0;
-        }
-        String input = r.toString()+"@"+longitude+","+latitude+"\n";
+        String input = r.toString() + "@" + longitude + "," + latitude + "\n";
         System.out.println(input);
         BufferedWriter bw = null;
         Log.i("ffff", "test");
 
         String filename = "myfile";
+        String filename2 = "name";
         String string = "Hello world!";
         FileOutputStream outputStream;
 
 
-        try{
+        try {
             // FileOutputStream fileOutputStream = openFileOutput("storage.txt", Context.MODE_PRIVATE);
             outputStream = openFileOutput(filename, Context.MODE_APPEND);
+            outputStream = openFileOutput(filename2, Context.MODE_APPEND);
             outputStream.write(input.getBytes());
+            outputStream.write(MainActivity.username.getBytes());
             outputStream.close();
             // bw = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
             // bw.write(input);
-            for(int k = 0; k < fileList().length; k++) {
+            for (int k = 0; k < fileList().length; k++) {
                 Log.d("fam", fileList()[k]);
             }
 
 
-
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }//finally{
         //  try{
@@ -190,8 +189,6 @@ public class CarpoolRequest extends AppCompatActivity {
         }
 
             return bestLocation;
-
-
     }
 
 //    private void galleryAddPic() {
