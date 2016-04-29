@@ -79,6 +79,7 @@ public class CarpoolActivity extends AppCompatActivity {
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader bufferedReader = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
+            System.out.println("um");
             String line = "l";
             int k = 0;
             while ((line = bufferedReader.readLine()) != null) {
@@ -116,12 +117,14 @@ public class CarpoolActivity extends AppCompatActivity {
 */
 
 
-                    if (k < values.length)
+                    if (k < values.length) {
                         values[k] = line.substring(0, line.indexOf("@"));
+                    }
 
                     k++;
                 }
                 Log.d("line", sb.toString());
+                System.out.println("line: " + line);
 
             }
         }catch (FileNotFoundException e) {
@@ -143,10 +146,16 @@ public class CarpoolActivity extends AppCompatActivity {
 
     public void test(View v, int pos)
     {
-        Intent intent = new Intent(this, RequestDetail.class);
+        /**Intent intent = new Intent(this, RequestDetail.class);
         intent.putExtra("pos", pos);
         intent.putExtra("values", values[pos]);
         startActivity(intent);
+         */
+
+        Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
+        myFirebaseRef.child(MainActivity.username).setValue(values[pos]);
+
+
     }
 
     public void requestClick(View v) {

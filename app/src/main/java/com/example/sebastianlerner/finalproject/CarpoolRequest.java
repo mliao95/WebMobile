@@ -112,96 +112,112 @@ public class CarpoolRequest extends AppCompatActivity {
         EditText ridersE = (EditText) findViewById(R.id.riders);
         EditText timeE = (EditText) findViewById(R.id.time);
 
+        if (!timeE.getText().toString().equals("") && !ridersE.getText().toString().equals("") && !slocationE.equals("") && !elocationE.equals("")) {
 
-        String slocation = slocationE.getText().toString();
-        String elocation = elocationE.getText().toString();
-        // String date = dateE.getText().toString().replace("/", "");
-        int riders = Integer.parseInt(ridersE.getText().toString());
-        String timeS = timeE.getText().toString().replace(":", "");
-        int time = Integer.parseInt(timeS);
-        boolean drive = false;
-        CheckBox checked = ((CheckBox) findViewById(R.id.driving));
-        if (checked.isChecked()) {
-            drive = true;
-        }
-        Request r = new Request(slocation.replace(" ", "_"), elocation.replace(" ", "_"), riders, drive, time);
-
-        //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-
-        Location location = null;
-        requestPermissions(LOCATION_PERMS, 1337 + 3);
-
-
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-            location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
-        double longitude, latitude;
-        if (location != null) {
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
-        } else {
-            longitude = 38.031674 + (Math.random() * 000001);
-            latitude = -78.510939 + (Math.random() * .000001);
-        }
-        String input = r.toString() + "@" + longitude + "," + latitude + "\n";
-        String line = r.toString() + "@" + longitude + "," + latitude;
-        Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
-        String mod = "";
-        String[] split = line.split(" ");
-        if (split[0].charAt(0) == '-') {
-            mod = "Driving/";
-            line = line.substring(1, line.length() - 1);
-            line = line.trim();
-        }
-        if (split[0].charAt(0) == '+') {
-            mod = "Carpooling/";
-            line = line.substring(1, line.length() - 1);
-            line = line.trim();
-        }
-        myFirebaseRef.child(mod + MainActivity.username).setValue(line);
-        System.out.println(input);
-        BufferedWriter bw = null;
-        Log.i("ffff", "test");
-
-        String filename = "myfile";
-        String filename2 = "name";
-        String string = "Hello world!";
-        FileOutputStream outputStream;
-
-
-        try {
-            // FileOutputStream fileOutputStream = openFileOutput("storage.txt", Context.MODE_PRIVATE);
-            outputStream = openFileOutput(filename, Context.MODE_APPEND);
-            outputStream = openFileOutput(filename2, Context.MODE_APPEND);
-            outputStream.write(input.getBytes());
-            outputStream.write(MainActivity.username.getBytes());
-            outputStream.close();
-            // bw = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
-            // bw.write(input);
-            for (int k = 0; k < fileList().length; k++) {
-                Log.d("fam", fileList()[k]);
+            String slocation = slocationE.getText().toString();
+            String elocation = elocationE.getText().toString();
+            // String date = dateE.getText().toString().replace("/", "");
+            int riders = Integer.parseInt(ridersE.getText().toString());
+            String timeS = "";
+            int time = 0;
+            if(timeE.getText().toString().contains(":")) {
+                 timeS = timeE.getText().toString().replace(":", "");
+                 time = Integer.parseInt(timeS);
+            }
+            else
+            {
+                timeS = timeE.getText().toString();
+                time = Integer.parseInt(timeS.toString());
             }
 
+            boolean drive = false;
+            CheckBox checked = ((CheckBox) findViewById(R.id.driving));
+            if (checked.isChecked()) {
+                drive = true;
+            }
+            Request r = new Request(slocation.replace(" ", "_"), elocation.replace(" ", "_"), riders, drive, time);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }//finally{
-        //  try{
-        //   bw.close();
-        // } catch (IOException e){
-        //   e.printStackTrace();
-        //}
-        //}
-        if (timeS != null || riders != 0 || !slocation.equals("") || !elocation.equals("")) {
-            Intent intent = new Intent(this, CarpoolActivity.class);
+            //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
-            startActivity(intent);
+            Location location = null;
+            requestPermissions(LOCATION_PERMS, 1337 + 3);
+
+
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+                location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            }
+            double longitude, latitude;
+            if (location != null) {
+                longitude = location.getLongitude();
+                latitude = location.getLatitude();
+            } else {
+                longitude = 38.031674 + (Math.random() * 000001);
+                latitude = -78.510939 + (Math.random() * .000001);
+            }
+            String input = r.toString() + "@" + longitude + "," + latitude + "\n";
+            String line = r.toString() + "@" + longitude + "," + latitude;
+            Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
+            String mod = "";
+            String[] split = line.split(" ");
+            if (split[0].charAt(0) == '-') {
+                mod = "Driving/";
+                line = line.substring(1, line.length() - 1);
+                line = line.trim();
+            }
+            if (split[0].charAt(0) == '+') {
+                mod = "Carpooling/";
+                line = line.substring(1, line.length() - 1);
+                line = line.trim();
+            }
+            myFirebaseRef.child(mod + MainActivity.username).setValue(line);
+            System.out.println(input);
+            BufferedWriter bw = null;
+            Log.i("ffff", "test");
+
+            String filename = "myfile";
+            String filename2 = "name";
+            String string = "Hello world!";
+            FileOutputStream outputStream;
+            FileOutputStream outputStream2;
+
+
+
+            try {
+                // FileOutputStream fileOutputStream = openFileOutput("storage.txt", Context.MODE_PRIVATE);
+                outputStream = openFileOutput(filename, Context.MODE_APPEND);
+                outputStream2 = openFileOutput(filename2, Context.MODE_APPEND);
+                outputStream.write(input.getBytes());
+                outputStream2.write(MainActivity.username.getBytes());
+                outputStream.close();
+                outputStream2.close();
+
+                // bw = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+                // bw.write(input);
+                for (int k = 0; k < fileList().length; k++) {
+                    Log.d("fam", fileList()[k]);
+                }
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }//finally{
+            //  try{
+            //   bw.close();
+            // } catch (IOException e){
+            //   e.printStackTrace();
+            //}
+            //}
+            if (timeS != null || riders != 0 || !slocation.equals("") || !elocation.equals("")) {
+                Intent intent = new Intent(this, CarpoolActivity.class);
+
+                startActivity(intent);
+            }
         }
-    }   
+    }
 
     private Location getLastKnownLocation() {
 
