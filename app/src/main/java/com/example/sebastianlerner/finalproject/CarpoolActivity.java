@@ -117,19 +117,7 @@ public class CarpoolActivity extends AppCompatActivity {
                     distances.add(distance);
 */
 
-                    Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
-                    String mod = "";
-                    String[] split = line.split(" ");
-                    if(split[0].charAt(0)== '-'){
-                        mod = "Driving/";
-                        line = line.substring(1, line.length()-1);
-                    }
-                    if(split[0].charAt(0) == '+'){
-                        mod = "Carpooling/";
-                        line = line.substring(1, line.length()-1);
-                    }
-                    System.out.println("LINE IS HERE:    " + line);
-                    myFirebaseRef.child(mod + MainActivity.username).setValue(line);
+
                     if (k < values.length)
                         values[k] = line.substring(0, line.indexOf("@"));
 

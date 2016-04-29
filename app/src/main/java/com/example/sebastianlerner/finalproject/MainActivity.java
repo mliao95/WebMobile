@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity{
                 Intent intent = new Intent(this, CarpoolActivity.class);
               //  intent.putExtra("pos", pos);
               //  intent.putExtra("values", values[pos]);
-                startActivity(intent);
+                //startActivity(intent);
             }
 
         }
@@ -189,8 +189,8 @@ startActivity(intent);
                 } else {
                     notify.setText("");
                     int a = h.size();
-                    String input = "Name/name";
-                    input += Integer.toString(a);
+                    String input = "Name/";
+                    input += name;
                     myFirebaseRef.child(input).setValue(name);
                     username = name;
                     startActivity(intent);
