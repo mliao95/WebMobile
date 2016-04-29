@@ -158,56 +158,62 @@ startActivity(intent);
         startActivity(intent);
     }
 
-    public void submitName(final View v){
+    public void submitName(final View v) {
         Firebase.setAndroidContext(this);
         System.out.println("Hello!");
         final Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
-        final EditText etname = (EditText)findViewById(R.id.userid);
-        final TextView notify = (TextView)findViewById(R.id.notify);
-        final String name = etname.getText().toString();
-        final Intent intent = new Intent(this, CarpoolActivity.class);
-        myFirebaseRef.child("Name").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                HashMap h = new HashMap<String, String>();
-                if(snapshot.getValue() instanceof HashMap){
-                    h = (HashMap) snapshot.getValue();
-                }
-                boolean unique = true;
-                Collection c = h.values();
-                Iterator itr = c.iterator();
-                while(itr.hasNext()){
-                    System.out.println(name);
-                    String i = (String) itr.next();
-                    if(name.equals(i)){
-                        unique = false;
+        final EditText etname = (EditText) findViewById(R.id.userid);
+        if (!etname.getText().toString().contains(" ")) {
+
+
+            final TextView notify = (TextView) findViewById(R.id.notify);
+            final String name = etname.getText().toString();
+            final Intent intent = new Intent(this, CarpoolActivity.class);
+            myFirebaseRef.child("Name").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    HashMap h = new HashMap<String, String>();
+                    if (snapshot.getValue() instanceof HashMap) {
+                        h = (HashMap) snapshot.getValue();
                     }
-                }
-                if(unique == false){
-                    notify.setText("The Name is not unique");
-                    unique = true;
-                } else {
-                    notify.setText("");
-                    int a = h.size();
-                    String input = "Name/";
-                    input += name;
-                    myFirebaseRef.child(input).setValue(name);
-                    username = name;
-                    startActivity(intent);
+                    boolean unique = true;
+                    Collection c = h.values();
+                    Iterator itr = c.iterator();
+                    while (itr.hasNext()) {
+                        System.out.println(name);
+                        String i = (String) itr.next();
+                        if (name.equals(i)) {
+                            unique = false;
+                        }
+                    }
+                    if (unique == false) {
+                        notify.setText("The Name is not unique");
+                        unique = true;
+                    } else {
+                        notify.setText("");
+                        int a = h.size();
+                        String input = "Name/";
+                        input += name;
+                        myFirebaseRef.child(input).setValue(name);
+                        username = name;
+                        startActivity(intent);
 //                    ViewGroup parent = (ViewGroup) v.getParent();
 //                    parent.removeView(v);
 //                    parent = (ViewGroup) etname.getParent();
 //                    parent.removeView(etname);
 //                    notify.setText("Name has been recorded successfuly! Thank you, " + name + ".");
+                    }
                 }
-            }
 
-            @Override public void onCancelled(FirebaseError error) { }
 
-        });
+                @Override
+                public void onCancelled(FirebaseError error) {
+                }
+
+            });
+        }
+
     }
-
-
 
     @Override
     public void onStart() {
