@@ -48,6 +48,15 @@
         android:id="@+id/drivinglist"
         android:onClick="drivingClick" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carpool Matches"
+        android:id="@+id/servicedlist"
+        android:onClick="servicedClick" />
+
     <ListView
         android:id="@+id/list"
         android:layout_height="306dp"

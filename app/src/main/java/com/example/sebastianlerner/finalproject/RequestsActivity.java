@@ -91,7 +91,7 @@ public class RequestsActivity extends AppCompatActivity {
                             System.out.println("s: "+ s);
                             if (s.equals(check[0])) {
                                 hold = (String) h.get(s);
-                                myFirebaseRef.child("Serviced/"+s+"/"+MainActivity.username).setValue(hold);
+                                myFirebaseRef.child("Serviced/"+MainActivity.username+" "+s).setValue(hold);
                             }
                         }
                     }
@@ -120,6 +120,6 @@ public class RequestsActivity extends AppCompatActivity {
 
 
     public void updateRequests(String test) {
-        requests.add(test);
+        requests.add(test.replace("_", " "));
     }
 }

@@ -161,6 +161,11 @@ public class CarpoolActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void servicedClick(View v){
+        Intent intent = new Intent(this, ServicedActivity.class);
+        startActivity(intent);
+    }
+
     public void viewRequestClick(View v){
         Intent intent = new Intent(this, RequestsActivity.class);
         startActivity(intent);
