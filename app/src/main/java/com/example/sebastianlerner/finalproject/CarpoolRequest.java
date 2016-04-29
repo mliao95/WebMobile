@@ -17,6 +17,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -144,6 +146,21 @@ public class CarpoolRequest extends AppCompatActivity {
             latitude = -78.510939+(Math.random()*.000001);
         }
         String input = r.toString() + "@" + longitude + "," + latitude + "\n";
+        String line = r.toString() + "@" + longitude + "," + latitude;
+        Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
+        String mod = "";
+        String[] split = line.split(" ");
+        if(split[0].charAt(0)== '-'){
+            mod = "Driving/";
+            line = line.substring(1, line.length()-1);
+            line = line.trim();
+        }
+        if(split[0].charAt(0) == '+'){
+            mod = "Carpooling/";
+            line = line.substring(1, line.length()-1);
+            line = line.trim();
+        }
+        myFirebaseRef.child(mod + MainActivity.username).setValue(line);
         System.out.println(input);
         BufferedWriter bw = null;
         Log.i("ffff", "test");
