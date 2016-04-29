@@ -26,6 +26,7 @@ public class ServicedActivity extends AppCompatActivity {
 
 
     protected void onCreate(Bundle savedInstanceState) {
+        final boolean stop = true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.request_listview);
         final ListView listView = (ListView) findViewById(R.id.requestlist);
@@ -61,7 +62,7 @@ public class ServicedActivity extends AppCompatActivity {
         System.out.println("Values: " + requests);
         ArrayAdapter<String> requestadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, requests);
         listView.setAdapter(requestadapter);
-        final Intent intent = new Intent(this, CarpoolActivity.class);
+        final Intent intent = new Intent(this, PhoneActivity.class);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -69,6 +70,13 @@ public class ServicedActivity extends AppCompatActivity {
                 int iposition = position;
                 System.out.println(position);
                 final String value = (String) listView.getItemAtPosition(iposition);
+                String[] sp = value.split(" ");
+
+                if(sp[0].equals(MainActivity.username)){
+                    intent.putExtra("key", sp[1]);
+                    startActivity(intent);
+                }
+                /**
                 myFirebaseRef.child("Serviced").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
@@ -80,16 +88,23 @@ public class ServicedActivity extends AppCompatActivity {
                         Iterator itr = c.iterator();
                         String s = "";
                         String hold = "";
+                        String key = "";
                         while (itr.hasNext()) {
                             s = (String) itr.next();
                             String[] check = value.split(" ");
-                            System.out.println("check: " + check[0]);
-                            System.out.println("s: "+ s);
-                            if (s.equals(check[0])) {
-                                hold = (String) h.get(s);
-                                myFirebaseRef.child("Serviced/"+MainActivity.username+"/"+s).setValue(hold);
+                            String fix = h.get(s).toString().replace("_", " ");
+                            System.out.println("FIX: " + fix);
+                            System.out.println("value: " + value);
+                            System.out.println("Check[0]: " + check[0]);
+
+                            if (fix.equals(value) && check[0].equals(MainActivity.username)) {
+                                key = s;
+                                intent.putExtra("key", s);
+                                startActivity(intent);
                             }
+
                         }
+
                     }
 
                     @Override
@@ -97,6 +112,7 @@ public class ServicedActivity extends AppCompatActivity {
                     }
 
                 });
+                 **/
 
 
             }

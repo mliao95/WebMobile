@@ -92,6 +92,7 @@ public class RequestsActivity extends AppCompatActivity {
                             if (s.equals(check[0])) {
                                 hold = (String) h.get(s);
                                 myFirebaseRef.child("Serviced/"+MainActivity.username+" "+s).setValue(hold);
+                                startActivity(intent);
                             }
                         }
                     }
@@ -101,8 +102,6 @@ public class RequestsActivity extends AppCompatActivity {
                     }
 
                 });
-
-
             }
         });
     }

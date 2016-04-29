@@ -38,7 +38,7 @@ public class DrivingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.request_listview);
-        final ListView listView = (ListView) findViewById(R.id.requestlist);
+        final ListView listView = (ListView) findViewById(R.id.drivinglist);
         Firebase.setAndroidContext(this);
         final Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
         myFirebaseRef.child("Driving").addValueEventListener(new ValueEventListener() {
@@ -101,6 +101,7 @@ public class DrivingActivity extends AppCompatActivity {
                             if (s.equals(check[0])) {
                                 hold = (String) h.get(s);
                                 myFirebaseRef.child("Serviced/"+s+" "+MainActivity.username).setValue(hold);
+                                startActivity(intent);
                             }
                         }
                     }
@@ -118,7 +119,7 @@ public class DrivingActivity extends AppCompatActivity {
 
     public void updateListView()
     {
-        ListView listView = (ListView) findViewById(R.id.requestlist);
+        ListView listView = (ListView) findViewById(R.id.drivinglist);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, requests);

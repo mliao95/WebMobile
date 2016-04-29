@@ -71,6 +71,19 @@
             android:name=".ServicedActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="RequestList"></activity>
+
+        <activity
+            android:name=".PhoneActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="RequestList"></activity>
+
+        <activity
+            android:name=".NumbersActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="RequestList"></activity>
+
+
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden"

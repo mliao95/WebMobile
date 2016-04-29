@@ -6,8 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/WebMobile.iml" filepath="$PROJECT_DIR$/WebMobile.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/backend/backend.iml" filepath="$PROJECT_DIR$/backend/backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/backend/backend.iml" filepath="$PROJECT_DIR$/backend/backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/firebase-client-android-2.5.2/firebase-client-android-2.5.2.iml" filepath="$PROJECT_DIR$/firebase-client-android-2.5.2/firebase-client-android-2.5.2.iml" />
       <module fileurl="file://$PROJECT_DIR$/firebase-client-android-2.5.2/firebase-client-android-2.5.2.iml" filepath="$PROJECT_DIR$/firebase-client-android-2.5.2/firebase-client-android-2.5.2.iml" />
       <module fileurl="file://$PROJECT_DIR$/webmobile/webmobile.iml" filepath="$PROJECT_DIR$/webmobile/webmobile.iml" />
     </modules>

@@ -173,6 +173,11 @@ public class CarpoolActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void numberClick(View v){
+        Intent intent = new Intent(this, NumbersActivity.class);
+        startActivity(intent);
+    }
+
     public void readClick(View v){
         myFirebaseRef.child("request1").addValueEventListener(new ValueEventListener() {
 
