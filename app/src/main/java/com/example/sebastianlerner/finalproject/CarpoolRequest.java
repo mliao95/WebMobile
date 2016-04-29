@@ -110,7 +110,7 @@ public class CarpoolRequest extends AppCompatActivity {
         if (checked.isChecked()) {
             drive = true;
         }
-        Request r = new Request(slocation, elocation, riders, drive, time);
+        Request r = new Request(slocation.replace(" ", "_"), elocation.replace(" ", "_"), riders, drive, time);
 
         //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 

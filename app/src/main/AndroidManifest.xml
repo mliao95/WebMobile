@@ -66,6 +66,11 @@
             android:name=".DrivingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="RequestList"></activity>
+
+        <activity
+            android:name=".ServicedActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="RequestList"></activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden"

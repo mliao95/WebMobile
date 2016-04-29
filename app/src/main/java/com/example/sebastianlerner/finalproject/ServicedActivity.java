@@ -1,9 +1,5 @@
 package com.example.sebastianlerner.finalproject;
 
-
-import android.support.v7.app.AppCompatActivity;
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,21 +13,15 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Created by Michael on 4/28/2016.
+ * Created by Michael on 4/29/2016.
  */
-
-/**
- * Created by Michael on 4/28/2016.
- */
-public class DrivingActivity extends AppCompatActivity {
-
+public class ServicedActivity extends AppCompatActivity {
     public final ArrayList<String> requests = new ArrayList<String>();
 
 
@@ -41,23 +31,20 @@ public class DrivingActivity extends AppCompatActivity {
         final ListView listView = (ListView) findViewById(R.id.requestlist);
         Firebase.setAndroidContext(this);
         final Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
-        myFirebaseRef.child("Driving").addValueEventListener(new ValueEventListener() {
+        myFirebaseRef.child("Serviced").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 HashMap h = new HashMap<String, String>();
                 if (snapshot.getValue() instanceof HashMap) {
                     h = (HashMap) snapshot.getValue();
                 }
-                Collection c = h.values();
+                Collection c = h.keySet();
                 Iterator itr = c.iterator();
                 while (itr.hasNext()) {
                     String s = (String) itr.next();
-                    if(s.contains("@")){
-                        s = s.substring(0, s.indexOf('@'));
-                    }
                     System.out.println("s: " + s);
                     String[] check = s.split(" ");
-                    if (!(check[0].equals(MainActivity.username))) {
+                    if ((check[0].equals(MainActivity.username))||(check[1].equals(MainActivity.username))) {
                         updateRequests(s);
                     }
                     System.out.println("requests: " + requests);
@@ -82,7 +69,7 @@ public class DrivingActivity extends AppCompatActivity {
                 int iposition = position;
                 System.out.println(position);
                 final String value = (String) listView.getItemAtPosition(iposition);
-                myFirebaseRef.child("Driving").addValueEventListener(new ValueEventListener() {
+                myFirebaseRef.child("Serviced").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         HashMap h = new HashMap<String, String>();
@@ -100,7 +87,7 @@ public class DrivingActivity extends AppCompatActivity {
                             System.out.println("s: "+ s);
                             if (s.equals(check[0])) {
                                 hold = (String) h.get(s);
-                                myFirebaseRef.child("Serviced/"+s+" "+MainActivity.username).setValue(hold);
+                                myFirebaseRef.child("Serviced/"+MainActivity.username+"/"+s).setValue(hold);
                             }
                         }
                     }
