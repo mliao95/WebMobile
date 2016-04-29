@@ -24,7 +24,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.Date;
+
+import java.util.List;
 
 
 /**
@@ -39,7 +42,7 @@ public class CarpoolRequest extends AppCompatActivity {
     private Uri fileUri;
     private String LOCATION = "1337+3";
     private LocationManager mLocationManager;
-    private Location myLocation = getLastKnownLocation();
+    //private Location myLocation = getLastKnownLocation();
 
     private ArrayList<Request> requests;
 
@@ -120,6 +123,9 @@ public class CarpoolRequest extends AppCompatActivity {
             drive = true;
         }
         Request r = new Request(slocation, elocation, riders, drive, time);
+
+        //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
         Location location = null;
         requestPermissions(LOCATION_PERMS, 1337 + 3);
 
@@ -133,11 +139,9 @@ public class CarpoolRequest extends AppCompatActivity {
         if (location != null) {
             longitude = location.getLongitude();
             latitude = location.getLatitude();
-
         } else {
             longitude = 38.031674+(Math.random()*000001);
             latitude = -78.510939+(Math.random()*.000001);
-
         }
         String input = r.toString() + "@" + longitude + "," + latitude + "\n";
         System.out.println(input);
@@ -155,7 +159,7 @@ public class CarpoolRequest extends AppCompatActivity {
             outputStream = openFileOutput(filename, Context.MODE_APPEND);
             outputStream = openFileOutput(filename2, Context.MODE_APPEND);
             outputStream.write(input.getBytes());
-            outputStream.write(MainActivity.userid.getBytes());
+            outputStream.write(MainActivity.username.getBytes());
             outputStream.close();
             // bw = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
             // bw.write(input);
@@ -182,8 +186,23 @@ public class CarpoolRequest extends AppCompatActivity {
     private Location getLastKnownLocation() {
 
 
+        Location bestLocation = null;
+        if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+            List<String> providers = mLocationManager.getProviders(true);
+            for (String provider : providers) {
+                Location l = mLocationManager.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                    // Found best last known location: %s", l);
+                    bestLocation = l;
+                }
+            }
+        }
 
-return null;
+            return bestLocation;
     }
 
     public void onRequestPermissionsResult(int requestCode,

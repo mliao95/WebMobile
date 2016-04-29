@@ -29,7 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 
 
 public class CarpoolActivity extends AppCompatActivity {
@@ -50,7 +50,7 @@ public class CarpoolActivity extends AppCompatActivity {
         setContentView(R.layout.carpool_main);
         ListView listView = (ListView) findViewById(R.id.list);
         TextView t1 = (TextView) findViewById(R.id.menutitle);
-        t1.setText("Hello, " + MainActivity.userid + "!");
+        t1.setText("Hello, " + MainActivity.username + "!");
         String[] values = new String[] { "",
                 "",
                 "",
@@ -68,7 +68,7 @@ public class CarpoolActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-           test(view, position);
+                test(view, position);
             }
 
 
@@ -118,9 +118,18 @@ public class CarpoolActivity extends AppCompatActivity {
 */
 
                     Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
-
-
-                    myFirebaseRef.child("request1").setValue(line);
+                    String mod = "";
+                    String[] split = line.split(" ");
+                    if(split[0].charAt(0)== '-'){
+                        mod = "Driving/";
+                        line = line.substring(1, line.length()-1);
+                    }
+                    if(split[0].charAt(0) == '+'){
+                        mod = "Carpooling/";
+                        line = line.substring(1, line.length()-1);
+                    }
+                    System.out.println("LINE IS HERE:    " + line);
+                    myFirebaseRef.child(mod + MainActivity.username).setValue(line);
                     if (k < values.length)
                         values[k] = line.substring(0, line.indexOf("@"));
 
@@ -159,6 +168,16 @@ public class CarpoolActivity extends AppCompatActivity {
        // intent.putExtra("position:", pos);
         startActivity(intent);
 
+    }
+
+    public void drivingClick(View v){
+        Intent intent = new Intent(this, DrivingActivity.class );
+        startActivity(intent);
+    }
+
+    public void viewRequestClick(View v){
+        Intent intent = new Intent(this, RequestsActivity.class);
+        startActivity(intent);
     }
 
     public void readClick(View v){

@@ -38,7 +38,7 @@ import java.util.Iterator;
 
 
 public class MainActivity extends AppCompatActivity{
-    static String userid = "";
+    static String username = "";
 
     final String[] LOCATION_PERMS={
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -160,6 +160,7 @@ startActivity(intent);
 
     public void submitName(final View v){
         Firebase.setAndroidContext(this);
+        System.out.println("Hello!");
         final Firebase myFirebaseRef = new Firebase("https://webmobile1295.firebaseio.com/");
         final EditText etname = (EditText)findViewById(R.id.userid);
         final TextView notify = (TextView)findViewById(R.id.notify);
@@ -191,7 +192,7 @@ startActivity(intent);
                     String input = "Name/name";
                     input += Integer.toString(a);
                     myFirebaseRef.child(input).setValue(name);
-                    userid = name;
+                    username = name;
                     startActivity(intent);
 //                    ViewGroup parent = (ViewGroup) v.getParent();
 //                    parent.removeView(v);
